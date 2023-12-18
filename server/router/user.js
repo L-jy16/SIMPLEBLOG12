@@ -24,4 +24,20 @@ router.post("/join", (req, res) => {
         })
 });
 
+router.post("/namecheck", (req, res) => {
+    User.findOne({ displayName: req.body.displayName })
+        .exec()
+        .then((result) => {
+            let check = true;
+            if (result) {
+                check = false;
+            }
+            res.status(200).json({ success: true, check })
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(400).json({ success: false });
+        })
+})
+
 module.exports = router;

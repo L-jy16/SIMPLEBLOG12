@@ -11,6 +11,10 @@ const UserJoin = () => {
     const [youPassC, setYouPassC] = useState("");
     const [flag, setFlag] = useState(false);
 
+    // 중복 검사하기 위한
+    const [nameCheck, setNameCheck] = useState(false);
+    const [nameInfo, setNameInfo] = useState("");
+
     let navigate = useNavigate();
 
     const JoinFunc = async (e) => {
@@ -23,6 +27,10 @@ const UserJoin = () => {
         }
         if (youPass !== youPassC) {
             return alert("비밀번호가 일치하지 않습니다.")
+        }
+        // 닉네임 중복검사를 안하고 가지 못하도록하는 것
+        if (!(nameCheck)) {
+            return alert("닉네임 중복검사를 해주세요.")
         }
 
         // firebase 회원가입
@@ -45,11 +53,37 @@ const UserJoin = () => {
             .then((response) => {
                 if (response.data.success) {
                     alert("회원가입이 완료되었습니다.");
+                    firebase.auth().signOut();
                     navigate("/login");
                 } else {
                     alert("회원가입이 실패하였습니다.");
                 }
             })
+    }
+
+    // 중복 검샇 눌렀을 때
+    const NameCheckFunc = (e) => {
+        setFlag(false);
+
+        e.preventDefault();
+
+        if (!youName) {
+            return alert("닉네임을 입력해주세요!");
+        }
+        let body = {
+            displayName: youName
+        }
+
+        axios.post("/api/user/namecheck", body).then((response) => {
+            if (response.data.success) {
+                if (response.data.check) {
+                    setNameCheck(true);
+                    setNameInfo("사용 가능한 닉네임입니다.");
+                } else {
+                    setNameInfo("사용할 수 없는 닉네임입니다.");
+                }
+            }
+        })
     }
 
     return (
@@ -67,7 +101,7 @@ const UserJoin = () => {
                             type="text"
                             id="youName"
                             name="youName"
-                            placeholder="이름"
+                            placeholder="닉네임"
                             className="input__style"
                             autoComplete='off'
                             required
@@ -75,6 +109,12 @@ const UserJoin = () => {
                             value={youName}
                             onChange={(e) => setYouName(e.currentTarget.value)}
                         />
+                    </div>
+
+                    {/* 중복 검사 */}
+                    <div style={{ marginBottom: "10px" }}>
+                        {nameInfo}
+                        <button onClick={(e) => NameCheckFunc(e)}>닉네임 중복검사</button>
                     </div>
 
                     <div>

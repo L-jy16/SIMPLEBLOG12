@@ -11,10 +11,10 @@ import Main from './components/layout/Main'
 import Home from './pages/Home'
 import PostList from './components/post/PostList'
 import PostWrite from './components/post/PostWrite'
-import PostDetail from './components/post/PostDetail'
 import PostModify from './components/post/PostModify'
 import UserLogin from './components/user/UserLogin'
 import UserJoin from './components/user/UserJoin'
+import PostArea from './components/post/PostArea.jsx'
 
 const App = () => {
 
@@ -40,7 +40,7 @@ const App = () => {
           <Route path='/' element={<Home />}></Route>
           <Route path='/list' element={<PostList />}></Route>
           <Route path='/write' element={<PostWrite />}></Route>
-          <Route path='/detail/:postNum' element={<PostDetail />}></Route>
+          <Route path='/detail/:postNum' element={<PostArea />}></Route>
           <Route path='/modify/:postNum' element={<PostModify />}></Route>
           <Route path='/login' element={<UserLogin />}></Route>
           <Route path='/join' element={<UserJoin />}></Route>
