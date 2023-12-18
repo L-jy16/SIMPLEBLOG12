@@ -1,3 +1,4 @@
+// php의 session.php와 같은 기능
 import { createSlice } from "@reduxjs/toolkit";
 
 export const userSlice = createSlice({

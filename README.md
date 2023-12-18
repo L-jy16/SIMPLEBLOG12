@@ -26,3 +26,8 @@ npm install multer-s3@2.10.0 --save;
 - client 폴더에 화살표 생길 때 : .git 폴더를 지운다.
 `rm -rf .git`
 `git rm --cached . -rf`# simple300
+
+
+## git url로 다운 받어서 세팅하는 법
+1. git clone "url"
+2. npm i => package.json에 있는 파일 없는 것 다운 받는 것
